@@ -5,10 +5,13 @@ from sqlalchemy.sql import func
 
 from databases import Database
 
+
 # sqlite
 DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
+# databases query builder
+database = Database(DATABASE_URL)
 
 Users = Table(
     "users",
@@ -22,11 +25,3 @@ Users = Table(
     Column("password", String(50)),
     Column("created_date", DateTime, default=func.now(), nullable=False),
 )
-
-
-def fake_hash_password(password: str):
-    return f"fakehashed{password}"
-
-
-# databases query builder
-database = Database(DATABASE_URL)

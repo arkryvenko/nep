@@ -7,6 +7,7 @@ router = APIRouter()
 
 @router.get("/", status_code=HTTPStatus.OK)
 async def retrieve_stats():
-    all = await crud.count_all()
-    by_country = await crud.count_by_country()
-    return by_country
+    total_users = await crud.count_all()
+    users_per_country = await crud.count_per_country()
+    stats = {'Total users count': total_users[0], 'Users per country': users_per_country}
+    return stats

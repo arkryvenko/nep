@@ -4,7 +4,6 @@ from http import HTTPStatus
 from fastapi import APIRouter, HTTPException, Path, Depends
 from fastapi.responses import JSONResponse
 
-from app.db import fake_hash_password
 from app.api import crud
 from app.api.routes import auth
 from app.api.models import UserInDB, UserOut, UserBase
@@ -35,9 +34,9 @@ async def create_user(user: UserInDB, token: str = Depends(auth.oauth2_scheme)):
     if user_db:
         raise HTTPException(
             status_code=HTTPStatus.CONFLICT,
-            detail=f"The username '{user.username}' already exists. " f"Please use a different username.",
+            detail=f"The username '{user.username}' already exists. Please use a different username.",
         )
-    user.password = fake_hash_password(user.password)
+    user.password = auth.get_password_hash(user.password)
     last_record_id = await crud.create_user(user)
     response = {**user.dict(), "id": last_record_id}
     return response
