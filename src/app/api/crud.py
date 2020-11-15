@@ -2,6 +2,13 @@ from app.api.models import UserInDB, UserOut
 from app.db import Users, database, fake_hash_password
 
 
+async def count_by_country():
+    query = """select count(users.id) as users_count, users.country as country 
+               from users
+               group by users.country"""
+    return await database.fetch_all(query=query)
+
+
 async def get_all():
     query = Users.select()
     return await database.fetch_all(query=query)

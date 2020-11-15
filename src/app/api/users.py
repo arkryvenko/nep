@@ -1,7 +1,7 @@
 from typing import List
 from http import HTTPStatus
 
-from fastapi import APIRouter, HTTPException, Path, Depends, status
+from fastapi import APIRouter, HTTPException, Path, Depends
 from fastapi.responses import JSONResponse
 
 from app.db import fake_hash_password

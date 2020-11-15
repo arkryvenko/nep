@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 from app.api import crud
 
 router = APIRouter()
@@ -6,4 +6,5 @@ router = APIRouter()
 
 @router.get("/")
 async def retrieve_stats():
-    return {'hello': 'world'}
+    return await crud.count_by_country()
+
