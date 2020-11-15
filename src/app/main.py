@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api import users, stats, auth
+from app.api.routes import stats, users, auth
 from app.db import database, engine, metadata
 
 

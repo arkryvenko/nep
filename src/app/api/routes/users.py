@@ -5,7 +5,8 @@ from fastapi import APIRouter, HTTPException, Path, Depends
 from fastapi.responses import JSONResponse
 
 from app.db import fake_hash_password
-from app.api import crud, auth
+from app.api import crud
+from app.api.routes import auth
 from app.api.models import UserInDB, UserOut, UserBase
 
 router = APIRouter()
@@ -32,11 +33,12 @@ async def retrieve_user(id: int = Path(..., gt=0), token: str = Depends(auth.oau
 async def create_user(user: UserInDB, token: str = Depends(auth.oauth2_scheme)):
     user_db = await crud.get_by_username(user.username)
     if user_db:
-        raise HTTPException(status_code=HTTPStatus.CONFLICT,
-                            detail=f"The username '{user.username}' already exists. "
-                                   f"Please use a different username.")
+        raise HTTPException(
+            status_code=HTTPStatus.CONFLICT,
+            detail=f"The username '{user.username}' already exists. " f"Please use a different username.",
+        )
     user.password = fake_hash_password(user.password)
-    last_record_id = await crud.post(user)
+    last_record_id = await crud.create_user(user)
     response = {**user.dict(), "id": last_record_id}
     return response
 
@@ -44,7 +46,7 @@ async def create_user(user: UserInDB, token: str = Depends(auth.oauth2_scheme)):
 @router.put("/{id}/", response_model=UserOut, status_code=HTTPStatus.OK)
 async def update_user(updated_user: UserBase, id: int = Path(..., gt=0), token: str = Depends(auth.oauth2_scheme)):
     user = await get_by_id_or_404(id)
-    await crud.put(id, updated_user)
+    await crud.update_user(id, updated_user)
     response = {**updated_user.dict(), "id": user.id}
     return response
 
@@ -52,5 +54,5 @@ async def update_user(updated_user: UserBase, id: int = Path(..., gt=0), token: 
 @router.delete("/{id}/")
 async def delete_user(id: int = Path(..., gt=0), token: str = Depends(auth.oauth2_scheme)):
     user = await get_by_id_or_404(id)
-    await crud.delete(user.id)
+    await crud.delete_user(user.id)
     return JSONResponse(status_code=HTTPStatus.OK, content={"message": "User has been deleted"})
