@@ -1,25 +1,25 @@
 # NEP User Service
 
-Build the image and run the container:
-```sh
+## Build the image and run the container:
+```bash
 $ docker-compose build 
-$ docker-compose up
-```sh
+$ docker-compose up -d
+```
 
-Total user count and User count per country statistics:
-```sh
+## Total user count and User count per country statistics:
+```bash
 http://127.0.0.1:8000/
-```sh
+```
 
-Swagger UI:
-```sh
+## Swagger UI:
+```bash
 http://127.0.0.1:8000/docs 
-```sh
+```
 
-Use those credentials to authorize and try to query endpoints:
-```sh
+## Credentials for authentication and getting access to protected endpoints:
+```bash
 odin - login
 password - password
-```sh
+```
 
 ![Screenshot](swagger_docs.jpg)
