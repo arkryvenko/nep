@@ -1,5 +1,5 @@
-from app.api.models import UserCreate, UserOut
-from app.db import Users, database
+from app.api.models import UserInDB, UserOut
+from app.db import Users, database, fake_hash_password
 
 
 async def get_all():
@@ -7,8 +7,13 @@ async def get_all():
     return await database.fetch_all(query=query)
 
 
-async def get(id: int):
+async def get_by_id(id: int):
     query = Users.select().where(id == Users.c.id)
+    return await database.fetch_one(query=query)
+
+
+async def get_by_username(username: str):
+    query = Users.select().where(username == Users.c.username)
     return await database.fetch_one(query=query)
 
 
@@ -17,7 +22,7 @@ async def delete(id: int):
     return await database.execute(query=query)
 
 
-async def post(user: UserCreate):
+async def post(user: UserInDB):
     query = Users \
         .insert() \
         .values(username=user.username,

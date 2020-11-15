@@ -5,9 +5,8 @@ from sqlalchemy.sql import func
 
 from databases import Database
 
+# sqlite
 DATABASE_URL = os.getenv("DATABASE_URL")
-
-# SQLAlchemy
 engine = create_engine(DATABASE_URL)
 metadata = MetaData()
 
@@ -15,7 +14,7 @@ Users = Table(
     "users",
     metadata,
     Column("id", Integer, primary_key=True),
-    Column("username", String(50), unique=True),
+    Column("username", String(32), unique=True, nullable=False),
     Column("first_name", String(50)),
     Column("last_name", String(50)),
     Column("email", String(50)),
@@ -23,6 +22,11 @@ Users = Table(
     Column("password", String(50)),
     Column("created_date", DateTime, default=func.now(), nullable=False),
 )
+
+
+def fake_hash_password(password: str):
+    return f"fakehashed{password}"
+
 
 # databases query builder
 database = Database(DATABASE_URL)

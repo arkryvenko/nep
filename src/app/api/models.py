@@ -9,7 +9,7 @@ class UserBase(BaseModel):
     country: str = Field(..., example="North")
 
 
-class UserCreate(UserBase):
+class UserInDB(UserBase):
     password: str
 
 
