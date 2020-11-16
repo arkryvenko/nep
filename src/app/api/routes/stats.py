@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from fastapi import APIRouter
-from app.api import crud
+from api import crud
+
 
 router = APIRouter()
 

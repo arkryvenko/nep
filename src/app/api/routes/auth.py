@@ -4,8 +4,8 @@ from passlib.context import CryptContext
 from fastapi import APIRouter, HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-from app.api.models import UserInDB
-from app.api.crud import get_by_username
+from api.models import UserInDB
+from api.crud import get_by_username
 
 
 router = APIRouter()

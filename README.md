@@ -19,7 +19,7 @@ http://127.0.0.1:8000/docs
 ## Credentials for authentication and getting access to protected endpoints:
 ```bash
 odin - login
-password - password
+secret - password
 ```
 
 ![Screenshot](swagger_docs.jpg)

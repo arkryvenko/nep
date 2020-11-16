@@ -1,16 +1,18 @@
+import uvicorn
 from fastapi import FastAPI
 
-from app.api.routes import stats, users, auth
-from app.db import database, engine, metadata
+from logger import init_logger
+from db import database, engine, metadata
+from api.routes import stats, users, auth
 
 
-metadata.create_all(engine)
 app = FastAPI()
 
 
 @app.on_event("startup")
 async def startup():
     await database.connect()
+    await init_logger()
 
 
 @app.on_event("shutdown")
@@ -21,3 +23,7 @@ async def shutdown():
 app.include_router(stats.router, tags=["statistics"])
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
 app.include_router(users.router, prefix="/users", tags=["users"])
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host='0.0.0.0', port=8000, reload=True, debug=True, workers=1)

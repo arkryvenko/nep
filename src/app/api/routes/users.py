@@ -1,12 +1,12 @@
 from typing import List
+from loguru import logger
 from http import HTTPStatus
-
 from fastapi import APIRouter, HTTPException, Path, Depends
 from fastapi.responses import JSONResponse
 
-from app.api import crud
-from app.api.routes import auth
-from app.api.models import UserInDB, UserOut, UserBase
+from api import crud
+from api.routes import auth
+from api.models import UserInDB, UserOut, UserBase
 
 router = APIRouter()
 
@@ -39,6 +39,7 @@ async def create_user(user: UserInDB, token: str = Depends(auth.oauth2_scheme)):
     user.password = auth.get_password_hash(user.password)
     last_record_id = await crud.create_user(user)
     response = {**user.dict(), "id": last_record_id}
+    logger.info(f"User ID: {last_record_id} created")
     return response
 
 
@@ -47,6 +48,7 @@ async def update_user(updated_user: UserBase, id: int = Path(..., gt=0), token: 
     user = await get_by_id_or_404(id)
     await crud.update_user(id, updated_user)
     response = {**updated_user.dict(), "id": user.id}
+    logger.info(f"User ID: {id} updated")
     return response
 
 
@@ -54,4 +56,5 @@ async def update_user(updated_user: UserBase, id: int = Path(..., gt=0), token: 
 async def delete_user(id: int = Path(..., gt=0), token: str = Depends(auth.oauth2_scheme)):
     user = await get_by_id_or_404(id)
     await crud.delete_user(user.id)
+    logger.info(f"User ID: {id} deleted")
     return JSONResponse(status_code=HTTPStatus.OK, content={"message": "User has been deleted"})

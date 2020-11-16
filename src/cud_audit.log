@@ -1,0 +1,14 @@
+2020-11-16 21:54:12.066 | INFO     | api.routes.users:update_user:51 - User ID: 11 updated
+2020-11-16 21:54:27.235 | INFO     | api.routes.users:create_user:42 - User ID: 27 created
+2020-11-16 21:55:41.881 | INFO     | api.routes.users:create_user:42 - User ID: 28 created
+2020-11-16 21:56:19.678 | INFO     | api.routes.users:delete_user:59 - User ID: 27 deleted
+2020-11-16 22:03:29.645 | INFO     | api.routes.users:create_user:42 - User ID: 29 created
+2020-11-16 22:03:40.796 | INFO     | api.routes.users:delete_user:59 - User ID: 12 deleted
+2020-11-16 22:03:58.061 | INFO     | api.routes.users:update_user:51 - User ID: 15 updated
+2020-11-16 22:05:02.590 | INFO     | api.routes.users:update_user:51 - User ID: 16 updated
+2020-11-16 22:05:17.169 | INFO     | api.routes.users:delete_user:59 - User ID: 20 deleted
+2020-11-16 22:17:53.745 | INFO     | api.routes.users:create_user:42 - User ID: 30 created
+2020-11-16 22:18:25.207 | INFO     | api.routes.users:update_user:51 - User ID: 30 updated
+2020-11-16 22:18:36.292 | INFO     | api.routes.users:delete_user:59 - User ID: 30 deleted
+2020-11-16 22:40:43.248 | INFO     | api.routes.users:create_user:44 - User ID: 30 created
+2020-11-16 22:41:29.413 | INFO     | api.routes.users:create_user:44 - User ID: 31 created

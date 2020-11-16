@@ -1,5 +1,5 @@
-from app.api.models import UserInDB, UserOut
-from app.db import Users, database
+from api.models import UserInDB, UserOut
+from db import Users, database
 
 
 async def get_by_id(id: int):
